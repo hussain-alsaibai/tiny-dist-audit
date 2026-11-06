@@ -1,0 +1,29 @@
+# tiny-dist-audit
+
+> Deterministic release-artifact manifests and drift detection for Python
+> wheels, sdists, and directory trees. Zero dependencies, pure stdlib, one module.
+
+## What it does
+- build_manifest(path) -> JSON manifest with file count, per-file sha256,
+  metadata (name, version, requires_python, license_expression, requires_dist),
+  and a canonical tree_digest.
+- check(path, baseline, key=..., fail_on=...) -> report with drift, risky
+  credential-shaped paths, signature state, severity, and reasons.
+- diff_manifests(old, new) -> added / removed / changed files and metadata fields.
+- sign(manifest, key) / verify(manifest, key) -> HMAC-SHA256 over the canonical body.
+
+## Facts an agent needs
+- Manifest schema string: `tiny-dist-audit/1` (`MANIFEST_SCHEMA`).
+- Python 3.9+. No dependencies. CLI entry point: `dist-audit`.
+- `dist-audit check ARTIFACT --baseline M.json --fail-on high` exits 5 on drift.
+- Exit codes: 0 clean, 2 usage/unreadable, 4 diff found differences, 5 check failed.
+- Severity: changed/removed file = high, added file = medium, metadata = low,
+  credential-shaped path = high, INVALID signature = critical.
+- Manifests are byte-stable across rebuilds; commit them and diff per tag.
+- The leak scan only inspects path NAMES; it cannot see a secret inside a .py file.
+- HMAC signing proves the manifest was not hand-edited. It is NOT Sigstore and
+  does not bind build identity to the artifact.
+
+## Links
+- Source: https://github.com/hussain-alsaibai/tiny-dist-audit
+- Example CI gate: examples/release-gate.yml

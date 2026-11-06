@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Test
+        run: pytest -q
+
+  selfaudit:
+    name: Build a wheel and audit it
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Build
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build --wheel
+      - name: Manifest is reproducible
+        run: |
+          pip install tiny-dist-audit
+          for whl in dist/*.whl; do
+            tiny-dist-audit manifest "$whl" -o /tmp/a.json
+            tiny-dist-audit manifest "$whl" -o /tmp/b.json
+            diff /tmp/a.json /tmp/b.json
+            tiny-dist-audit tree-digest "$whl"
+          done
+      - name: Bundled example manifest still describes its files
+        run: |
+          python - <<'PY'
+          import json, sys
+          sys.path.insert(0, ".")
+          import tiny_dist_audit as t
+          m = json.load(open("examples/dist-manifest.json"))
+          assert m["artifact"]["tree_digest"] == t._tree_digest(m["files"]), "stale example"
+          assert m["artifact"]["file_count"] == len(m["files"]), "stale file_count"
+          PY

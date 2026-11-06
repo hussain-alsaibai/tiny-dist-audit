@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tiny-dist-audit"
+version = "0.1.0"
+description = "Deterministic release-artifact manifests and drift detection for Python distributions"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [{name = "Hussain AlSaibai"}]
+keywords = [
+    "supply-chain",
+    "provenance",
+    "manifest",
+    "wheel",
+    "sdist",
+    "release",
+    "ci",
+    "reproducible-build",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Security",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+dist-audit = "tiny_dist_audit:main"
+
+[project.urls]
+Homepage = "https://github.com/hussain-alsaibai/tiny-dist-audit"
+Repository = "https://github.com/hussain-alsaibai/tiny-dist-audit"
+Issues = "https://github.com/hussain-alsaibai/tiny-dist-audit/issues"
+
+[tool.setuptools]
+py-modules = ["tiny_dist_audit"]
+
+[tool.pytest.ini_options]
+testpaths = ["test_tiny_dist_audit.py"]

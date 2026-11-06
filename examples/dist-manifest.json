@@ -1,0 +1,26 @@
+{
+  "artifact": {
+    "file_count": 5,
+    "kind": "wheel",
+    "name": "tiny_thing-1.0.0-py3-none-any.whl",
+    "tree_digest": "57842aeba42fbaf2ddb29d1abac4240f57a345624e90a1202fc174a850e53779"
+  },
+  "files": {
+    "tiny_thing-1.0.0.dist-info/METADATA": "46312fb6971ddd02a7ea113ef6b30594fdb0c9ec2095f08c7a83bc8bc8595a2f",
+    "tiny_thing-1.0.0.dist-info/RECORD": "f7a7eab0bcbc35543157c84e8840d65181c7fcbf7ca9485cf2c162384f682afe",
+    "tiny_thing-1.0.0.dist-info/WHEEL": "fb1a99d6cbf58856568f06ad0eec586678bd27071139cb902b1789b04291b601",
+    "tiny_thing/__init__.py": "9e26bf369911c45c243c684147b23fc9e1dcfcf257d299a1c632016a6fcd33f4",
+    "tiny_thing/core.py": "f469842763db3981070764f968bbc779cb0779f326e386b99bbe3431f8f30c49"
+  },
+  "metadata": {
+    "license": null,
+    "license_expression": "MIT",
+    "name": "tiny-thing",
+    "requires_dist": [
+      "requests>=2"
+    ],
+    "requires_python": ">=3.9",
+    "version": "1.0.0"
+  },
+  "schema": "tiny-dist-audit/1"
+}
