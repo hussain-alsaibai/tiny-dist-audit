@@ -39,7 +39,10 @@ jobs:
           python -m build --wheel
       - name: Manifest is reproducible
         run: |
-          pip install tiny-dist-audit
+          # Run the checkout, not a PyPI release: this repo is published before
+          # any wheel exists on PyPI, so `pip install tiny-dist-audit` here would
+          # be testing a different (or absent) version than the one in this run.
+          python -m tiny_dist_audit --help > /dev/null
           for whl in dist/*.whl; do
             tiny-dist-audit manifest "$whl" -o /tmp/a.json
             tiny-dist-audit manifest "$whl" -o /tmp/b.json
