@@ -44,10 +44,10 @@ jobs:
           # be testing a different (or absent) version than the one in this run.
           python -m tiny_dist_audit --help > /dev/null
           for whl in dist/*.whl; do
-            tiny-dist-audit manifest "$whl" -o /tmp/a.json
-            tiny-dist-audit manifest "$whl" -o /tmp/b.json
+            python -m tiny_dist_audit manifest "$whl" -o /tmp/a.json
+            python -m tiny_dist_audit manifest "$whl" -o /tmp/b.json
             diff /tmp/a.json /tmp/b.json
-            tiny-dist-audit tree-digest "$whl"
+            python -m tiny_dist_audit tree-digest "$whl"
           done
       - name: Bundled example manifest still describes its files
         run: |
