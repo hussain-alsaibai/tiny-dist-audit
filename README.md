@@ -37,7 +37,8 @@ so, by name.
 ## Install
 
 ```bash
-pip install tiny-dist-audit
+# From GitHub (recommended -- not yet on PyPI)
+pip install git+https://github.com/hussain-alsaibai/tiny-dist-audit.git
 ```
 
 Python 3.9+. No third-party packages. The CLI entry point is `dist-audit`;
