@@ -25,7 +25,8 @@ For Python distributions the comparison is cheap. This does it in one
 dependency-free module:
 
 ```bash
-pip install tiny-dist-audit
+# From GitHub (recommended -- not yet on PyPI)
+pip install git+https://github.com/hussain-alsaibai/tiny-dist-audit.git
 dist-audit check dist/*.whl --baseline dist-manifest.json --fail-on high
 ```
 
